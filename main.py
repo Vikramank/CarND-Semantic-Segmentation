@@ -65,13 +65,16 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     
     #### From dense layer to 1 by 1 convolution of the last layer
     layer_7_1_by_1=tf.layers.conv2d(vgg_layer7_out, num_classes,1,padding='same',
+                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     
     ## Upsample the data
     layer_7_upsample=tf.layers.conv2d_transpose(layer_7_1_by_1,num_classes,4,2,padding='same', 
+                                                kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     
-    layer_4_1_by_1=tf.layers.conv2d(vgg_layer4_out,num_classes,1,padding='same',activation=tf.nn.elu,
+    layer_4_1_by_1=tf.layers.conv2d(vgg_layer4_out,num_classes,1,padding='same',
+                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     fcn32=tf.add(layer_4_1_by_1,layer_7_upsample)
@@ -80,16 +83,19 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     
     #### From dense layer to 1 by 1 convolution of the last layer
     layer_3_1_by_1=tf.layers.conv2d(vgg_layer3_out, num_classes,1,1,padding='same',
+                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                     kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     
     ## Upsample the data
     layer_fcn32_upsample=tf.layers.conv2d_transpose(fcn32,num_classes,4,2,padding='same',
+                                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     fcn16=tf.add(layer_3_1_by_1,layer_fcn32_upsample)
     
     ###fcn8
     fcn8=tf.layers.conv2d_transpose(fcn16,num_classes,16,8,padding='same',
+                                    kernel_initializer= tf.random_normal_initializer(stddev=0.01), 
                                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     
     
@@ -164,8 +170,8 @@ def run():
     with tf.Session() as sess:
         # Path to vgg model
         
-        epochs=2
-        batch_size=8
+        epochs=50
+        batch_size=32
         # Creating a Deep neural network
         vgg_path = os.path.join(data_dir, 'vgg')
         # Create function to get batches
