@@ -113,7 +113,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     :param num_classes: Number of classes to classify
     :return: Tuple of (logits, train_op, cross_entropy_loss)
     """
-    # TODO: Implement function
+    
     logits = tf.reshape(nn_last_layer, (-1, num_classes))
     
     
@@ -148,7 +148,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
           for image, label in get_batches_fn(batch_size):
               sess.run(train_op, feed_dict={input_image:image,correct_label:label,keep_prob:0.8,learning_rate: 0.0005})
                              
-    # TODO: Implement function
+    
     pass
 tests.test_train_nn(train_nn)
 
@@ -193,14 +193,6 @@ def run():
         # OPTIONAL: Augment Images for better results
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
-        # TODO: Build NN using load_vgg, layers, and optimize function
-
-        # TODO: Train NN using the train_nn function
-
-        # TODO: Save inference data using helper.save_inference_samples
-        #  helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
-
-        # OPTIONAL: Apply the trained model to a video
 
 
 if __name__ == '__main__':
